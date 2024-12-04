@@ -1,6 +1,8 @@
 import { AppError } from "../../../utils/middlewares/errorHandler";
 import AuthRepository from "../authRepository";
 import { hashPassword, comparePassword } from "../../../utils/bcrypt";
+import { generateToken } from "../../../utils/jwt";
+import { IUser } from "../../../utils/types";
 
 const authRepository = new AuthRepository();
 
@@ -19,6 +21,7 @@ const register = async (email: string, password: string, name: string) => {
     throw new AppError("An error occured while creating user", 500);
   }
   const { password: _, ...newUser } = user;
+  (newUser as IUser).token = generateToken(newUser);
   return newUser;
 };
 
@@ -32,6 +35,7 @@ const login = async (email: string, password: string) => {
     throw new AppError("Password is incorrect", 401);
   }
   const { password: _, ...newUser } = user;
+  (newUser as IUser).token = generateToken(newUser);
   return newUser;
 };
 
