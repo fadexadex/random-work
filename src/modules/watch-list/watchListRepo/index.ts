@@ -29,9 +29,6 @@ class WatchListRepo {
   };
 
   //movies
-  insertManyMovies = async (movie: any) => {
-    return await this.prisma.movie.createMany({ data: movie });
-  };
 
   addMovieToWatchList = async (watchListId: number, movieId: number) => {
     return await this.prisma.watchList.update({

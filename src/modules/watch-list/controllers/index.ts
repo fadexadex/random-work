@@ -12,11 +12,15 @@ const createWatchListCtrl = async (
   res: Response, 
   next: NextFunction
 ) => {
-  const newWatchList = await createWatchList(req.body);
-  if (!newWatchList) {
-    next(new AppError("Failed to create watch list", 500));
+  try {
+    const newWatchList = await createWatchList(req.body);
+    if (!newWatchList) {
+      return next(new AppError("Failed to create watch list", 500));
+    }
+    res.status(201).json(newWatchList);
+  } catch (error) {
+    next(error);
   }
-  res.status(201).json(newWatchList);
 };
 
 const editWatchListCtrl = async (
@@ -24,12 +28,16 @@ const editWatchListCtrl = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { id } = req.params;
-  const updatedWatchList = await editWatchList(Number(id), req.body);
-  if (!updatedWatchList) {
-    next(new AppError("Failed to update watch list", 500));
+  try {
+    const { id } = req.params;
+    const updatedWatchList = await editWatchList(Number(id), req.body);
+    if (!updatedWatchList) {
+      return next(new AppError("Failed to update watch list", 500));
+    }
+    res.status(200).json(updatedWatchList);
+  } catch (error) {
+    next(error);
   }
-  res.status(200).json(updatedWatchList);
 };
 
 const getWatchListByIdCtrl = async (
@@ -37,12 +45,16 @@ const getWatchListByIdCtrl = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { id } = req.params;
-  const watchList = await getWatchListById(Number(id));
-  if (!watchList) {
-    next(new AppError("Watch list not found", 404));
+  try {
+    const { id } = req.params;
+    const watchList = await getWatchListById(Number(id));
+    if (!watchList) {
+      return next(new AppError("Watch list not found", 404));
+    }
+    res.status(200).json(watchList);
+  } catch (error) {
+    next(error);
   }
-  res.status(200).json(watchList);
 };
 
 const getAllUserWatchListCtrl = async (
@@ -50,12 +62,16 @@ const getAllUserWatchListCtrl = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { userId } = req.params;
-  const watchList = await getAllUserWatchList(Number(userId));
-  if (!watchList) {
-    next(new AppError("Watch list not found", 404));
+  try {
+    const { userId } = req.params;
+    const watchList = await getAllUserWatchList(Number(userId));
+    if (!watchList) {
+      return next(new AppError("Watch list not found", 404));
+    }
+    res.status(200).json(watchList);
+  } catch (error) {
+    next(error);
   }
-  res.status(200).json(watchList);
 };
 
 export {
