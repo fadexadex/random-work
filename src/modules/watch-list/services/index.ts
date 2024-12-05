@@ -19,9 +19,14 @@ const getAllUserWatchList = async (userId: number) => {
   return await watchListRepo.getAllUserWatchList(userId);
 };
 
+const addMovieToWatchList = async (watchListId: number, movieId: number) => {
+  return await watchListRepo.addMovieToWatchList(watchListId, movieId);
+};
+
 export {
   createWatchList,
   editWatchList,
   getWatchListById,
   getAllUserWatchList,
+  addMovieToWatchList,
 };

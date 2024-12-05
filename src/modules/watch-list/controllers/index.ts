@@ -4,12 +4,13 @@ import {
   editWatchList,
   getWatchListById,
   getAllUserWatchList,
+  addMovieToWatchList,
 } from "../services";
 import { AppError } from "../../../utils/middlewares/errorHandler";
 
 const createWatchListCtrl = async (
   req: Request,
-  res: Response, 
+  res: Response,
   next: NextFunction
 ) => {
   try {
@@ -74,9 +75,33 @@ const getAllUserWatchListCtrl = async (
   }
 };
 
+const addMovieToWatchListCtrl = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { watchListId, movieId } = req.params;
+    if (!watchListId || !movieId) {
+      return next(new AppError("Watch list id and movie id are required", 400));
+    }
+    const updatedWatchList = await addMovieToWatchList(
+      Number(watchListId),
+      Number(movieId)
+    );
+    if (!updatedWatchList) {
+      return next(new AppError("Failed to add movie to watch list", 500));
+    }
+    res.status(200).json(updatedWatchList);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export {
   createWatchListCtrl,
   editWatchListCtrl,
   getWatchListByIdCtrl,
   getAllUserWatchListCtrl,
+  addMovieToWatchListCtrl,
 };

@@ -4,6 +4,7 @@ import {
   editWatchListCtrl,
   getWatchListByIdCtrl,
   getAllUserWatchListCtrl,
+  addMovieToWatchListCtrl,
 } from "./controllers";
 import {
   editWatchListValidator,
@@ -21,5 +22,6 @@ router.get(
   getAllUserWatchListValidator,
   getAllUserWatchListCtrl
 );
+router.post("/add-movie/:watchListId/:movieId", addMovieToWatchListCtrl);
 
 export default router;

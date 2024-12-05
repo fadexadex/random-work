@@ -31,10 +31,13 @@ model WatchList {
   updatedAt   DateTime @updatedAt
   userId      Int
   user        User     @relation(fields: [userId], references: [id])
-  movie      Movie[]
+  movie       Movie[]
 }
 
 model Movie {
-  id          Int       @id @default(autoincrement())
-  api_id      Int
+  id        Int        @id @default(autoincrement())
+  api_id    Int
+  WatchList WatchList? @relation(fields: [watchListId], references: [id])
+
+  watchListId Int?
 }

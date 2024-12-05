@@ -8,7 +8,10 @@ class WatchListRepo {
   }
 
   createWatchList = async (data: IWatchListCreate) => {
-    return await this.prisma.watchList.create({ data });
+    return await this.prisma.watchList.create({
+      data,
+      include: { movie: true },
+    });
   };
 
   editWatchList = async (id: number, data: IWatchListCreate) => {
@@ -19,27 +22,28 @@ class WatchListRepo {
   };
 
   getWatchListById = async (id: number) => {
-    return await this.prisma.watchList.findUnique({ where: { id } });
+    return await this.prisma.watchList.findUnique({
+      where: { id },
+      include: { movie: true },
+    });
   };
 
   getAllUserWatchList = async (userId: number) => {
     return await this.prisma.watchList.findMany({
       where: { userId },
+      include: { movie: true },
     });
   };
-
-  //movies
 
   addMovieToWatchList = async (watchListId: number, movieId: number) => {
     return await this.prisma.watchList.update({
       where: { id: watchListId },
       data: {
-        movies: {
-          connect: {
-            id: movieId,
-          },
+        movie: {
+          create: [{ api_id: movieId }],
         },
       },
+      include: { movie: true },
     });
   };
 }
