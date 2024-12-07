@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { IWatchListCreate } from "utils/types";
+import { IMovie } from "utils/types";
 
 class WatchListRepo {
   private prisma: PrismaClient;
@@ -35,17 +36,19 @@ class WatchListRepo {
     });
   };
 
-  addMovieToWatchList = async (watchListId: number, movieId: number) => {
+  addMovieToWatchList = async (watchListId: number, movieDetails: IMovie) => {
     return await this.prisma.watchList.update({
       where: { id: watchListId },
       data: {
         movie: {
-          create: [{ api_id: movieId }],
+          create: movieDetails,
         },
       },
       include: { movie: true },
     });
   };
 }
+
+
 
 export default WatchListRepo;

@@ -81,13 +81,14 @@ const addMovieToWatchListCtrl = async (
   next: NextFunction
 ) => {
   try {
-    const { watchListId, movieId } = req.params;
-    if (!watchListId || !movieId) {
-      return next(new AppError("Watch list id and movie id are required", 400));
+    const { watchListId } = req.params;
+
+    if (!watchListId || !req.body) {
+      return next(new AppError("Invalid Request, ensure watchlistId and movies details are present", 400));
     }
     const updatedWatchList = await addMovieToWatchList(
       Number(watchListId),
-      Number(movieId)
+      req.body
     );
     if (!updatedWatchList) {
       return next(new AppError("Failed to add movie to watch list", 500));

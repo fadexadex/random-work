@@ -18,6 +18,26 @@ export interface IWatchListCreate {
   userId: number;
 }
 
+// interface AddMovieToWatchListInput {
+//   watchListId Int
+//   api_id      Int
+//   title       String
+//   overview    String
+//   posterPath  String
+//   releaseDate DateTime
+//   voteAverage Float
+// }
+
+export interface IMovie {
+  api_id: number;
+  title: string;
+  overview?: string;
+  posterPath?: string;
+  releaseDate?: string;
+  voteAverage?: number;
+}
+
+
 declare global {
   namespace Express {
     interface Request {

@@ -1,5 +1,5 @@
 import WatchListRepo from "../watchListRepo";
-import { IWatchListCreate } from "utils/types";
+import { IMovie, IWatchListCreate } from "utils/types";
 
 const watchListRepo = new WatchListRepo();
 
@@ -19,8 +19,8 @@ const getAllUserWatchList = async (userId: number) => {
   return await watchListRepo.getAllUserWatchList(userId);
 };
 
-const addMovieToWatchList = async (watchListId: number, movieId: number) => {
-  return await watchListRepo.addMovieToWatchList(watchListId, movieId);
+const addMovieToWatchList = async (watchListId: number, movieDetails: IMovie) => {
+  return await watchListRepo.addMovieToWatchList(watchListId, movieDetails);
 };
 
 export {

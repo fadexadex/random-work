@@ -22,6 +22,6 @@ router.get(
   getAllUserWatchListValidator,
   getAllUserWatchListCtrl
 );
-router.post("/add-movie/:watchListId/:movieId", addMovieToWatchListCtrl);
+router.post("/add-movie/:watchListId/", addMovieToWatchListCtrl);
 
 export default router;
